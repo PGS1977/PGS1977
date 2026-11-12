@@ -25,6 +25,8 @@ describe('fixture pack — synthetic only', () => {
       const source = parseOrThrow(ProductSourceSchema, data, 'fixture ProductSource')
       expect(source.provenance).toBe(PROVENANCE.fixture)
       expect(source.manufacturer).toBe('SYNTHETIC')
+      expect(source.manufacturerId).toBe('synthetic')
+      expect(source.structuredDataStatus).toBe('fixture')
     }
   })
 

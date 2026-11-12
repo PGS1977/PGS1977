@@ -19,6 +19,8 @@ export const PROJECT_DOCUMENT_KIND = 'containment_validation_project' as const
 export const DemoCableSchema = z.object({
   id: z.string().min(1),
   reference: z.string().min(1),
+  /** Registry manufacturer id used for schedule/picker filtering. */
+  manufacturerId: z.string().min(1).default('synthetic'),
   outsideDiameterMm: z.number().finite().positive(),
   massKgPerM: z.number().finite().nonnegative(),
   requiredBendRadiusMm: z.number().finite().positive(),
@@ -39,10 +41,15 @@ export const DemoProjectInputsSchema = z.object({
 
 export const ProductSourceRefSchema = z.object({
   id: z.string().min(1),
+  manufacturerId: z.string().min(1).default('synthetic'),
   manufacturer: z.string().min(1),
+  productKind: z.enum(['cable', 'containment']).default('cable'),
   sourceFileOrReference: z.string().min(1),
   revision: z.string().min(1),
   provenance: ProvenanceStatusSchema,
+  structuredDataStatus: z
+    .enum(['fixture', 'incomplete', 'partial', 'verified_available'])
+    .default('incomplete'),
   notes: z.string().optional(),
 })
 
@@ -53,6 +60,12 @@ export const DesignBasisSchema = z.object({
   spacedMultiplier: z.number().finite().positive().optional(),
   stackedLayerCount: z.number().int().positive().optional(),
   stackedVerticalGapMm: z.number().finite().nonnegative().optional(),
+  /** Selected cable makers for this project (multi-manufacturer). */
+  selectedCableManufacturerIds: z.array(z.string().min(1)).default(['synthetic']),
+  /** Selected containment makers when sources are present. */
+  selectedContainmentManufacturerIds: z
+    .array(z.string().min(1))
+    .default(['synthetic']),
   productSources: z.array(ProductSourceRefSchema),
   assumptions: z.array(
     z.object({
@@ -143,20 +156,88 @@ export type DesignBasis = z.infer<typeof DesignBasisSchema>
 export const FIXTURE_PRODUCT_SOURCES: DesignBasis['productSources'] = [
   {
     id: 'fixture-source-containment',
+    manufacturerId: 'synthetic',
     manufacturer: 'SYNTHETIC',
+    productKind: 'containment',
     sourceFileOrReference: 'data/fixtures/containment-products.json',
     revision: 'fixture-2026-11-12',
     provenance: 'fixture',
+    structuredDataStatus: 'fixture',
     notes: 'SYNTHETIC FIXTURE — not manufacturer-verified.',
   },
   {
     id: 'fixture-source-cable',
+    manufacturerId: 'synthetic',
     manufacturer: 'SYNTHETIC',
+    productKind: 'cable',
     sourceFileOrReference: 'data/fixtures/cable-products.json',
     revision: 'fixture-2026-11-12',
     provenance: 'fixture',
+    structuredDataStatus: 'fixture',
     notes: 'SYNTHETIC FIXTURE — not Prysmian production values.',
   },
+]
+
+/**
+ * Per-source provenance stubs for owner-supplied raw catalogues.
+ * No OD/kg/bend values invented — structuredDataStatus remains incomplete.
+ */
+export const RAW_CATALOGUE_PRODUCT_SOURCES: DesignBasis['productSources'] = [
+  {
+    id: 'raw-source-bicc',
+    manufacturerId: 'bicc',
+    manufacturer: 'BICC',
+    productKind: 'cable',
+    sourceFileOrReference:
+      'data/raw/Power-Cable-EN-Catalogue_June25_digital.pdf',
+    revision: 'raw-received',
+    provenance: 'assumed',
+    structuredDataStatus: 'incomplete',
+    notes:
+      'Raw catalogue pointer only. LV only — never Overhead Line. No structured product rows yet.',
+  },
+  {
+    id: 'raw-source-cleveland',
+    manufacturerId: 'cleveland',
+    manufacturer: 'Cleveland Cable',
+    productKind: 'cable',
+    sourceFileOrReference: 'data/raw/ (12 Cleveland LV datasheets)',
+    revision: 'raw-received',
+    provenance: 'assumed',
+    structuredDataStatus: 'incomplete',
+    notes:
+      'Raw datasheet set received (CDV-9). Structured OD/kg/bend not extracted.',
+  },
+  {
+    id: 'raw-source-cablofil',
+    manufacturerId: 'cablofil',
+    manufacturer: 'Cablofil',
+    productKind: 'containment',
+    sourceFileOrReference:
+      'data/raw/Cablofil Fasclic+ 2023 WEB rev_11.5.23.pdf',
+    revision: 'raw-received',
+    provenance: 'assumed',
+    structuredDataStatus: 'incomplete',
+    notes:
+      'Raw Cablofil catalogue pointer only. Structured usable envelope not extracted.',
+  },
+  {
+    id: 'raw-source-swifts',
+    manufacturerId: 'swifts',
+    manufacturer: 'Swifts',
+    productKind: 'containment',
+    sourceFileOrReference: 'data/raw/swifts-cable-tray-technical-guide.pdf',
+    revision: 'raw-received',
+    provenance: 'assumed',
+    structuredDataStatus: 'incomplete',
+    notes:
+      'Raw Swifts catalogue pointer only. Structured usable envelope not extracted.',
+  },
+]
+
+export const ALL_KNOWN_PRODUCT_SOURCES: DesignBasis['productSources'] = [
+  ...FIXTURE_PRODUCT_SOURCES,
+  ...RAW_CATALOGUE_PRODUCT_SOURCES,
 ]
 
 export const DEFAULT_ASSUMPTIONS: DesignBasis['assumptions'] = [
@@ -171,6 +252,12 @@ export const DEFAULT_ASSUMPTIONS: DesignBasis['assumptions'] = [
     summary:
       'Stacked layer count and vertical gap are explicit project inputs; no silent defaults.',
     status: 'provisional',
+  },
+  {
+    id: 'AS08',
+    summary:
+      'BICC: LV cables only — never Overhead Line (AAC/AAAC/ACSR/ABC) from the mixed catalogue PDF.',
+    status: 'confirmed',
   },
 ]
 
@@ -345,7 +432,9 @@ export function defaultDesignBasisFromInputs(
     spareTargetPercent: inputs.spareTargetPercent,
     arrangementMode: inputs.arrangementMode,
     spacedMultiplier: inputs.spacedMultiplier,
-    productSources: FIXTURE_PRODUCT_SOURCES,
+    selectedCableManufacturerIds: ['synthetic'],
+    selectedContainmentManufacturerIds: ['synthetic'],
+    productSources: ALL_KNOWN_PRODUCT_SOURCES,
     assumptions: DEFAULT_ASSUMPTIONS,
     catalogueState: 'incomplete',
   }

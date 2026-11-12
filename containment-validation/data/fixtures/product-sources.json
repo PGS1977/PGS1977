@@ -2,21 +2,27 @@
   {
     "schemaVersion": "1.0.0",
     "id": "fixture-source-containment",
+    "manufacturerId": "synthetic",
     "manufacturer": "SYNTHETIC",
+    "productKind": "containment",
     "sourceFileOrReference": "data/fixtures/containment-products.json",
     "revision": "fixture-2026-11-12",
     "date": "2026-11-12",
     "provenance": "fixture",
+    "structuredDataStatus": "fixture",
     "notes": "SYNTHETIC FIXTURE — not manufacturer-verified. Geometry invented for engine scaffolding only."
   },
   {
     "schemaVersion": "1.0.0",
     "id": "fixture-source-cable",
+    "manufacturerId": "synthetic",
     "manufacturer": "SYNTHETIC",
+    "productKind": "cable",
     "sourceFileOrReference": "data/fixtures/cable-products.json",
     "revision": "fixture-2026-11-12",
     "date": "2026-11-12",
     "provenance": "fixture",
+    "structuredDataStatus": "fixture",
     "notes": "SYNTHETIC FIXTURE — not manufacturer-verified. Not Prysmian production values."
   }
 ]

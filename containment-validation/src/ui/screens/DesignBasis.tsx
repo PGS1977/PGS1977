@@ -1,6 +1,6 @@
-import { provenanceLabel, type ProvenanceStatus } from '../../domain'
 import type { DesignBasis, ProjectDocument } from '../../storage'
 import type { DemoProjectInputs } from '../../project/syntheticProject'
+import { ManufacturerSelection } from './ManufacturerSelection'
 
 type Props = {
   document: ProjectDocument
@@ -158,22 +158,11 @@ export function DesignBasisScreen({
         ) : null}
       </div>
 
-      <h2 className="screen__sub">Product sources</h2>
-      <ul className="source-list">
-        {designBasis.productSources.map((s) => (
-          <li key={s.id}>
-            <span className={`prov prov--${s.provenance}`}>
-              {(s.provenance as ProvenanceStatus).toUpperCase()}
-            </span>
-            <strong>{s.manufacturer}</strong> · {s.sourceFileOrReference} · rev{' '}
-            {s.revision}
-            <div className="source-list__note">
-              {provenanceLabel(s.provenance)}
-              {s.notes ? ` — ${s.notes}` : ''}
-            </div>
-          </li>
-        ))}
-      </ul>
+      <h2 className="screen__sub">Manufacturer selection</h2>
+      <ManufacturerSelection
+        designBasis={designBasis}
+        onChange={(partial) => patchBasis(partial)}
+      />
 
       <h2 className="screen__sub">Assumptions</h2>
       <ul className="assumption-list">
