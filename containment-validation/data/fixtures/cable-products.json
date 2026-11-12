@@ -1,0 +1,29 @@
+[
+  {
+    "schemaVersion": "1.0.0",
+    "id": "fixture-cable-synth-a",
+    "productSourceId": "fixture-source-cable",
+    "code": "SYNTH-CAB-A",
+    "type": "synthetic_power",
+    "outsideDiameterMm": 28,
+    "massKgPerM": 1.15,
+    "massKnown": true,
+    "bendConstraint": {
+      "requiredRadiusMm": 280,
+      "convention": "centreline",
+      "condition": "fixed_installation",
+      "reference": "fixture-only"
+    },
+    "_comment": "SYNTHETIC — not Prysmian production values."
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "id": "fixture-cable-synth-incomplete",
+    "productSourceId": "fixture-source-cable",
+    "code": "SYNTH-CAB-INCOMPLETE",
+    "type": "synthetic_power",
+    "outsideDiameterMm": 22,
+    "massKnown": false,
+    "_comment": "SYNTHETIC incomplete: missing mass and bend constraint for AC09."
+  }
+]

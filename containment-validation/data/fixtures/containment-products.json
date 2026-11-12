@@ -1,0 +1,36 @@
+[
+  {
+    "schemaVersion": "1.0.0",
+    "id": "fixture-tray-synth-200",
+    "productSourceId": "fixture-source-containment",
+    "code": "SYNTH-TR-200",
+    "family": "Synthetic open tray",
+    "type": "TR",
+    "nominalWidthMm": 200,
+    "nominalDepthMm": 50,
+    "usableEnvelope": {
+      "areaMm2": 8500,
+      "rectMm": {
+        "xMm": 0,
+        "yMm": 0,
+        "widthMm": 190,
+        "heightMm": 44.73684210526316
+      }
+    },
+    "massKg": 4.2,
+    "massKnown": true,
+    "_comment": "SYNTHETIC. Nominal width is metadata only; usable envelope is explicit. Not a 150/300 mm hard-coded outcome."
+  },
+  {
+    "schemaVersion": "1.0.0",
+    "id": "fixture-tray-synth-incomplete",
+    "productSourceId": "fixture-source-containment",
+    "code": "SYNTH-TR-INCOMPLETE",
+    "family": "Synthetic open tray (incomplete envelope)",
+    "type": "TR",
+    "nominalWidthMm": 220,
+    "nominalDepthMm": 50,
+    "massKnown": false,
+    "_comment": "SYNTHETIC incomplete record for AC09-style tests: missing usable envelope and mass."
+  }
+]

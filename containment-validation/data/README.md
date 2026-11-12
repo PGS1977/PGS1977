@@ -1,9 +1,18 @@
 # Product data directories
 
-| Directory | Purpose |
-|---|---|
-| `raw/` | Owner-supplied sources retained unchanged |
-| `verified/` | Reviewed structured product records (empty until structured from raw) |
-| `fixtures/` | Synthetic development records only (when present on app branches) |
+| Directory | Purpose | Provenance |
+|---|---|---|
+| `raw/` | Owner-supplied source files retained **unchanged** | Not used in calculations until structured & verified |
+| `verified/` | Reviewed structured product records from owner sources | `verified` — may back manufacturer claims for covered fields only |
+| `fixtures/` | Conspicuously synthetic development records | `fixture` — **never** manufacturer-verified |
 
-Raw PDFs under `raw/` are **not** verified product records. For the BICC catalogue, **LV only** may be extracted later — see `raw/DO-NOT-USE-OVERHEAD-LINE.md`.
+## Rules
+
+- Incomplete production-data state until verified records exist; fixture-based engine work continues.
+- Do **not** invent Legrand / Prysmian / BICC dimensions, radius factors, support ratings or product references.
+- Nominal tray width/depth is not usable envelope. Store verified usable boundaries per product.
+- 150 mm / 300 mm tray examples are enabled only when matching verified geometry is supplied; width alone never fixes pass/fail.
+- Missing mass is unknown, not zero.
+- Raw PDFs under `raw/` are **not** verified product records. For the BICC catalogue, **LV only** may be extracted later — see `raw/DO-NOT-USE-OVERHEAD-LINE.md`.
+
+See `docs/data-gap-register.md` for DG01–DG10 status.
