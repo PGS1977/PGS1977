@@ -1,6 +1,14 @@
 # Raw manufacturer sources
 
-Owner-supplied files retained **unchanged**. Do not edit bytes in this directory.
+Owner-supplied files retained **unchanged**. Do not edit bytes in this directory. Structure into `../verified/` only after review.
+
+## Containment sources (Cablofil / Swifts)
+
+| Filename | Brand / family | Notes |
+|---|---|---|
+| `Cablofil Fasclic+ 2023 WEB rev_11.5.23.pdf` | Cablofil (Legrand family) | Unstructured PDF catalogue — **not** verified structured product data |
+| `swifts-cable-ladder.pdf` | Swifts (Legrand family) | Unstructured PDF — ladder |
+| `swifts-cable-tray-technical-guide.pdf` | Swifts (Legrand family) | Unstructured PDF — tray technical guide |
 
 ## Cable sources (BICC)
 
@@ -10,10 +18,6 @@ Owner-supplied files retained **unchanged**. Do not edit bytes in this directory
 
 ### HARD RULE — LV only
 
-**Do NOT use Overhead Line cables.** When structuring this PDF later, extract **LV only** (building wires / LV power). Overhead Conductors / aerial bundle sections are **out of scope** and must not enter `data/verified/` or calculations.
+**Do NOT use Overhead Line cables.** When structuring the BICC PDF later, extract **LV only** (building wires / LV power). Overhead Conductors / aerial bundle sections are **out of scope** and must not enter `data/verified/` or calculations. See `DO-NOT-USE-OVERHEAD-LINE.md`.
 
-Status: **raw received** (`received-unstructured`). Not verified product data.
-
-## Containment sources
-
-Cablofil / Swifts PDFs are relocated on a separate intake PR (`cursor/raw-catalogue-intake-b66e`). They may not yet be present on `main` until that PR merges.
+Status: **raw received** (`received-unstructured`). Not usable for manufacturer-backed calculation claims until structured and moved to `verified/`.
