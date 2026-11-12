@@ -4,8 +4,11 @@
   --paper: #f3f0ea;
   --band: #dfe6df;
   --accent: #2f5d50;
+  --accent-2: #8a4b2c;
   --warn-bg: #fff4d6;
   --warn-ink: #5c4a12;
+  --line: #c5cec5;
+  --select: #cfe4d8;
   --mono: "IBM Plex Mono", "Consolas", monospace;
   --sans: "Source Sans 3", "Segoe UI", sans-serif;
   --display: "Fraunces", "Georgia", serif;
@@ -28,56 +31,311 @@ body {
 .shell {
   max-width: 52rem;
   margin: 0 auto;
-  padding: 2.5rem 1.25rem 4rem;
+  padding: 1.5rem 1rem 3rem;
 }
 
-.shell__header {
-  margin-bottom: 1.5rem;
-}
-
-.shell__brand {
-  margin: 0;
-  font-family: var(--display);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--accent);
-}
-
-.shell__tagline {
-  margin: 0.35rem 0 0;
-  color: var(--muted);
-  font-size: 0.95rem;
+.shell--wide {
+  max-width: 72rem;
 }
 
 .shell__banner {
   background: var(--warn-bg);
   color: var(--warn-ink);
   border-left: 4px solid #c4952a;
-  padding: 0.9rem 1rem;
-  margin-bottom: 1.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
   line-height: 1.45;
+  font-size: 0.95rem;
 }
 
-.shell__panel h1 {
+.workspace__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 0.75rem;
+}
+
+.workspace__brand {
+  margin: 0;
   font-family: var(--display);
-  font-size: 1.55rem;
-  margin: 0 0 0.6rem;
+  font-size: clamp(1.75rem, 4vw, 2.4rem);
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -0.02em;
 }
 
-.shell__panel p,
-.shell__panel li {
-  line-height: 1.5;
+.workspace__tag {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.workspace__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.workspace__actions button {
+  font: inherit;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+
+.workspace__actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.workspace__actions button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.workspace__selection {
+  margin: 0 0 0.85rem;
+  padding: 0.55rem 0.75rem;
+  background: var(--band);
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.workspace__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.workspace__grid > :nth-child(4),
+.workspace__grid > :nth-child(5) {
+  grid-column: span 1;
+}
+
+@media (max-width: 860px) {
+  .workspace__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.view {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--line);
+  padding: 0.65rem 0.75rem 0.75rem;
+  min-height: 0;
+}
+
+.view__head {
+  margin-bottom: 0.35rem;
+}
+
+.view__head h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.view__head p {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.view__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #f7faf7;
+  border: 1px solid #e2e8e2;
+}
+
+.view__svg--tall {
+  min-height: 220px;
+}
+
+.svg-label,
+.svg-ref,
+.svg-cable-id {
+  font-family: var(--mono);
+  font-size: 10px;
+  fill: var(--muted);
+}
+
+.svg-cable-id {
+  fill: #fff;
+  font-size: 9px;
+  pointer-events: none;
+}
+
+.hit {
+  fill: transparent;
+  stroke: transparent;
+  cursor: pointer;
+}
+
+.hit--selected {
+  fill: rgba(47, 93, 80, 0.12);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.cable {
+  cursor: pointer;
+}
+
+.mesh-fill {
+  fill: #d7ded7;
+  stroke: #8b968b;
+  stroke-width: 1;
+  cursor: pointer;
+}
+
+.envelope {
+  fill: rgba(47, 93, 80, 0.06);
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
+  cursor: pointer;
+}
+
+.envelope--selected {
+  fill: rgba(47, 93, 80, 0.16);
+  stroke-width: 2.5;
+}
+
+.mesh3d {
+  fill: #d5ddd5;
+  stroke: #6f7a6f;
+  cursor: pointer;
+}
+
+.mesh3d--selected {
+  fill: var(--select);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.fit3d {
+  fill: var(--accent-2);
+  cursor: pointer;
+}
+
+.orbit {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+.orbit input {
+  flex: 1;
+}
+
+.issue-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 280px;
+  overflow: auto;
+}
+
+.issue {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 0.5rem 0.6rem;
+  cursor: pointer;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.issue--selected {
+  border-color: var(--accent);
+  background: var(--select);
+}
+
+.issue__check {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.issue__code {
+  font-family: var(--mono);
+  font-size: 0.78rem;
   color: var(--muted);
 }
 
-.shell__panel ul {
-  padding-left: 1.2rem;
+.issue__evidence {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.35;
 }
 
-.shell__panel code {
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   font-family: var(--mono);
-  font-size: 0.88em;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status--pass { color: #1f6b45; }
+.status--error { color: #9b2c2c; }
+.status--incomplete { color: #9a6b12; }
+.status--stale { color: #5a6470; }
+.status--not_checked { color: #5a6470; }
+
+.weight-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.weight-table th,
+.weight-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 0.35rem 0.3rem;
+  text-align: left;
+}
+
+.weight-table tbody tr {
+  cursor: pointer;
+}
+
+.row--selected {
+  background: var(--select);
+}
+
+.structural-panel {
+  margin-top: 0.65rem;
+  padding: 0.55rem 0.65rem;
+  background: #eef1f3;
+  color: var(--muted);
+  font-size: 0.85rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.workspace__hash {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.workspace__hash code {
+  font-family: var(--mono);
   background: var(--band);
   padding: 0.05rem 0.3rem;
 }

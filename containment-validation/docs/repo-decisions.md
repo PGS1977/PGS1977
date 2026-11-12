@@ -12,3 +12,6 @@ Appended when Increment A + B landed in `containment-validation/`.
 | R06 | 2026-11-12 | Placement search | Deterministic ID-sorted order + reverse + integer start-X offsets up to `searchLimit`; exhaustion → `ERROR_NO_VALID_ARRANGEMENT_FOUND` without impossibility claim | agreed |
 | R07 | 2026-11-12 | Bend paths | Straight + horizontal 90° analytic line/arc; lateral offsets preserved as parallel bend radii across fitting ports | agreed |
 | R08 | 2026-11-12 | Increment C branch | Stacked PR from `cursor/m1-schemas-area-weight-b66e` as `cursor/m1-placement-bend-b66e` | agreed |
+| R09 | 2026-11-12 | Increment D 3D | Engineered SVG isometric with orbit control (no Three.js yet); validation envelope kept distinct from render mesh | agreed |
+| R10 | 2026-11-12 | Linked selection | Single React selection state shared by plan, cross-section, 3D, issues, weight schedule | agreed |
+| R11 | 2026-11-12 | Increment D branch | Stacked on C as `cursor/m1-linked-views-b66e` | agreed |

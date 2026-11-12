@@ -1,8 +1,10 @@
 /**
  * 2D / 3D geometry adapters (brief §8).
- * Deferred until Increment D. Engineered geometry only — not AI pictures.
+ * Engineered geometry only — not AI pictures.
  */
 
-export type RenderAdapterStatus = 'not_implemented'
+export * from './geometry'
 
-export const renderAdapterStatus: RenderAdapterStatus = 'not_implemented'
+export type RenderAdapterStatus = 'svg_engineered_poc'
+
+export const renderAdapterStatus: RenderAdapterStatus = 'svg_engineered_poc'
