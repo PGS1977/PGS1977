@@ -3,7 +3,7 @@ import {
   applyInputChangeKeepingPriorResults,
   buildDemoSnapshot,
   DEFAULT_DEMO_INPUTS,
-} from '../src/ui/demo/syntheticProject'
+} from '../src/project/syntheticProject'
 import { anyStale, hashInputs, markStaleResults } from '../src/engine'
 
 describe('AC10 — input/rule change marks results stale', () => {

@@ -15,3 +15,6 @@ Appended when Increment A + B landed in `containment-validation/`.
 | R09 | 2026-11-12 | Increment D 3D | Engineered SVG isometric with orbit control (no Three.js yet); validation envelope kept distinct from render mesh | agreed |
 | R10 | 2026-11-12 | Linked selection | Single React selection state shared by plan, cross-section, 3D, issues, weight schedule | agreed |
 | R11 | 2026-11-12 | Increment D branch | Stacked on C as `cursor/m1-linked-views-b66e` | agreed |
+| R12 | 2026-11-12 | Persistence | Versioned `ProjectDocument` JSON + `localStorage` library (`MemoryProjectLibrary` for tests); export/import via download/file | agreed |
+| R13 | 2026-11-12 | Increment E branch | Stacked on D as `cursor/m1-save-reopen-b66e` | agreed |
+| R14 | 2026-11-12 | Demo project module | Moved to `src/project/` so storage does not depend on UI | agreed |

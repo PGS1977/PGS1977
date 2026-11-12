@@ -1,5 +1,5 @@
 import { isSelected, type Selection } from '../../domain'
-import type { DemoProjectSnapshot } from '../demo/syntheticProject'
+import type { DemoProjectSnapshot } from '../../project/syntheticProject'
 import { StatusBadge } from './statusBadge'
 
 type Props = {

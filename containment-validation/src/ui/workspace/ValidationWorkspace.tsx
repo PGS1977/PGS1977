@@ -9,9 +9,9 @@ import { anyStale } from '../../engine'
 import {
   applyInputChangeKeepingPriorResults,
   buildDemoSnapshot,
-  DEFAULT_DEMO_INPUTS,
   type DemoProjectInputs,
-} from '../demo/syntheticProject'
+} from '../../project/syntheticProject'
+import type { ProjectDocument } from '../../storage'
 import { CrossSectionView } from './CrossSectionView'
 import { IssueList } from './IssueList'
 import { PlanView } from './PlanView'
@@ -19,13 +19,25 @@ import { StatusBadge } from './statusBadge'
 import { View3D } from './View3D'
 import { WeightSchedule } from './WeightSchedule'
 
+type Props = {
+  document: ProjectDocument
+  onInputsChange: (inputs: DemoProjectInputs) => void
+  onSave: () => void
+  onExport: () => void
+}
+
 /**
  * Linked validation workspace (brief §7 item 5).
  * Selection is shared across plan, cross-section, 3D, issues and weights.
  * All statuses come from pure engine calls on synthetic fixtures.
  */
-export function ValidationWorkspace() {
-  const [inputs, setInputs] = useState<DemoProjectInputs>(DEFAULT_DEMO_INPUTS)
+export function ValidationWorkspace({
+  document,
+  onInputsChange,
+  onSave,
+  onExport,
+}: Props) {
+  const inputs = document.calculationInputs
   const [selection, setSelection] = useState<Selection>(EMPTY_SELECTION)
   const [stalePreview, setStalePreview] = useState<ReturnType<
     typeof applyInputChangeKeepingPriorResults
@@ -40,15 +52,13 @@ export function ValidationWorkspace() {
       : `${selection.kind}: ${selection.id}`
 
   function bumpSpareTarget() {
-    // AC10 demo: changing a rule marks prior results stale, then refresh clears it.
     const prior = buildDemoSnapshot(inputs)
     const next: DemoProjectInputs = {
       ...inputs,
       spareTargetPercent: inputs.spareTargetPercent === 25 ? 30 : 25,
     }
-    const applied = applyInputChangeKeepingPriorResults(prior, next)
-    setStalePreview(applied)
-    setInputs(next)
+    setStalePreview(applyInputChangeKeepingPriorResults(prior, next))
+    onInputsChange(next)
   }
 
   function clearStaleByRecalc() {
@@ -63,15 +73,17 @@ export function ValidationWorkspace() {
       spacedMultiplier: 1,
     }
     setStalePreview(applyInputChangeKeepingPriorResults(prior, next))
-    setInputs(next)
+    onInputsChange(next)
   }
 
   return (
     <div className="workspace">
       <section className="shell__banner" role="status">
         <strong>Production catalogue incomplete.</strong>{' '}
-        {provenanceLabel(PROVENANCE.fixture)}. Linked views use synthetic fixture
-        geometry only — never hard-coded 150/300 mm pass/fail.
+        {provenanceLabel(PROVENANCE.fixture)}. Project{' '}
+        <code>{document.project.projectNumber}</code> · {document.project.name}.
+        Linked views use synthetic fixture geometry only — never hard-coded
+        150/300 mm pass/fail.
       </section>
 
       <div className="workspace__toolbar">
@@ -82,6 +94,12 @@ export function ValidationWorkspace() {
           </p>
         </div>
         <div className="workspace__actions">
+          <button type="button" onClick={onSave}>
+            Save
+          </button>
+          <button type="button" onClick={onExport}>
+            Export JSON
+          </button>
           <button type="button" onClick={bumpSpareTarget}>
             Change spare target (stale demo)
           </button>

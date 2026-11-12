@@ -339,3 +339,168 @@ body {
   background: var(--band);
   padding: 0.05rem 0.3rem;
 }
+
+.app-nav {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.app-nav button {
+  font: inherit;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+}
+
+.app-nav button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.app-nav__active {
+  border-color: var(--accent) !important;
+  background: var(--select) !important;
+}
+
+.app-status {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.screen__head h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.7rem;
+}
+
+.screen__head p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+}
+
+.screen__sub {
+  margin: 1.25rem 0 0.5rem;
+  font-family: var(--display);
+  font-size: 1.15rem;
+}
+
+.screen__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.screen__actions button,
+.file-btn {
+  font: inherit;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+}
+
+.file-btn {
+  display: inline-flex;
+  align-items: center;
+}
+
+.file-btn input {
+  display: none;
+}
+
+.screen__empty {
+  color: var(--muted);
+}
+
+.project-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.project-table th,
+.project-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 0.45rem 0.35rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.project-table__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.project-table__actions button {
+  font: inherit;
+  font-size: 0.82rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 0.25rem 0.45rem;
+  cursor: pointer;
+}
+
+.cat {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+}
+
+.cat--incomplete { color: #9a6b12; }
+.cat--partial { color: #5a6470; }
+.cat--verified_available { color: #1f6b45; }
+
+.basis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem;
+}
+
+.basis-grid label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.basis-grid input,
+.basis-grid select {
+  font: inherit;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+}
+
+.source-list,
+.assumption-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.source-list li {
+  margin-bottom: 0.65rem;
+}
+
+.source-list__note {
+  font-size: 0.85rem;
+}
+
+.prov {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  margin-right: 0.4rem;
+  padding: 0.1rem 0.3rem;
+  background: var(--band);
+}
+
+.prov--fixture { background: var(--warn-bg); color: var(--warn-ink); }
+.prov--assumed { background: #e8eef5; color: #334; }
+.prov--verified { background: #dcefe3; color: #1f6b45; }
