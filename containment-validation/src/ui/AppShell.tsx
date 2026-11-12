@@ -4,6 +4,8 @@ import {
   RESULT_STATUS,
 } from '../domain'
 import {
+  arrangeCables,
+  evaluateBendRadius,
   evaluateSpareArea,
   evaluateWeight,
   structuralSupportPanelResult,
@@ -28,6 +30,23 @@ export function AppShell() {
     containmentMassKnown: true,
   })
 
+  const placementDemo = arrangeCables({
+    cables: [
+      { cableInstanceId: 'demo-c1', outsideDiameterMm: 28 },
+      { cableInstanceId: 'demo-c2', outsideDiameterMm: 28 },
+    ],
+    envelope: { widthMm: 190, heightMm: 44 },
+    settings: { mode: 'touching', searchLimit: 8 },
+  })
+
+  const bendDemo = evaluateBendRadius({
+    cableInstanceId: 'demo-c1',
+    achievedCentrelineRadiusMm: 300,
+    requiredRadiusMm: 300,
+    requiredConvention: 'centreline',
+    outsideDiameterMm: 28,
+  })
+
   const structural = structuralSupportPanelResult({
     id: 'struct-panel',
     inputRevisionOrHash: 'demo',
@@ -48,15 +67,16 @@ export function AppShell() {
         <code>data/verified/</code>. Development uses labelled synthetic fixtures
         under <code>data/fixtures/</code> (
         {provenanceLabel(PROVENANCE.fixture)}). Nominal 150/300 mm widths are
-        never hard-coded to pass or fail.
+        never hard-coded to pass or fail. Unequal-diameter spacing uses provisional
+        max(D1,D2) (AS01).
       </section>
 
       <section className="shell__panel">
-        <h1>Increment A + B engine status</h1>
+        <h1>Increment A–C engine status</h1>
         <p>
-          Schemas, units, statuses, provenance, spare-area and weight functions
-          are available as pure TypeScript modules independent of React. Placement
-          and bend checks are next.
+          Domain schemas plus pure area, weight, placement and bend engines —
+          independent of React. Linked plan / cross-section / 3D views are next
+          (Increment D).
         </p>
         <ul>
           <li>
@@ -68,6 +88,15 @@ export function AppShell() {
             Weight demo (synthetic AC07 inputs): status{' '}
             <code>{weightDemo.status}</code>, combined{' '}
             <code>{weightDemo.combinedInstalledKg}</code> kg
+          </li>
+          <li>
+            Placement demo (synthetic touching pair): status{' '}
+            <code>{placementDemo.status}</code>, attempts{' '}
+            <code>{placementDemo.searchAttempts}</code>
+          </li>
+          <li>
+            Bend demo (synthetic 300/300 centreline): status{' '}
+            <code>{bendDemo.status}</code> — {bendDemo.message}
           </li>
           <li>
             Structural panel (AC16): <code>{structural.status}</code> —{' '}
