@@ -27,14 +27,24 @@ export const RectMmSchema = z.object({
 })
 export type RectMm = z.infer<typeof RectMmSchema>
 
+export const ProductKindSchema = z.enum(['cable', 'containment'])
+export type ProductKind = z.infer<typeof ProductKindSchema>
+
 export const ProductSourceSchema = z.object({
   schemaVersion: z.literal(SCHEMA_VERSION).default(SCHEMA_VERSION),
   id: IdSchema,
+  /** Stable registry id (bicc, cleveland, cablofil, swifts, synthetic, …). */
+  manufacturerId: z.string().min(1).default('synthetic'),
   manufacturer: z.string().min(1),
+  productKind: ProductKindSchema.default('cable'),
   sourceFileOrReference: z.string().min(1),
   revision: z.string().min(1),
   date: z.string().optional(),
   provenance: ProvenanceStatusSchema,
+  /** Whether structured product rows exist for this source. */
+  structuredDataStatus: z
+    .enum(['fixture', 'incomplete', 'partial', 'verified_available'])
+    .default('incomplete'),
   notes: z.string().optional(),
 })
 export type ProductSource = z.infer<typeof ProductSourceSchema>

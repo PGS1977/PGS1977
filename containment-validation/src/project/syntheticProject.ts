@@ -30,6 +30,8 @@ export const DEMO_CALCULATION_VERSION = 'demo-workspace-1.0.0' as const
 export type DemoCable = {
   id: string
   reference: string
+  /** Registry manufacturer id for schedule / picker filtering. */
+  manufacturerId: string
   outsideDiameterMm: number
   massKgPerM: number
   requiredBendRadiusMm: number
@@ -78,6 +80,7 @@ export const DEFAULT_DEMO_INPUTS: DemoProjectInputs = {
     {
       id: 'cable-synth-a',
       reference: 'SYNTH-CAB-A',
+      manufacturerId: 'synthetic',
       outsideDiameterMm: 28,
       massKgPerM: 1.15,
       requiredBendRadiusMm: 280,
@@ -86,6 +89,7 @@ export const DEFAULT_DEMO_INPUTS: DemoProjectInputs = {
     {
       id: 'cable-synth-b',
       reference: 'SYNTH-CAB-B',
+      manufacturerId: 'synthetic',
       outsideDiameterMm: 28,
       massKgPerM: 1.15,
       requiredBendRadiusMm: 280,

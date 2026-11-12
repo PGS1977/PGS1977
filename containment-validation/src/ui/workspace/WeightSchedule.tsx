@@ -1,4 +1,8 @@
-import { isSelected, type Selection } from '../../domain'
+import {
+  getManufacturer,
+  isSelected,
+  type Selection,
+} from '../../domain'
 import type { DemoProjectSnapshot } from '../../project/syntheticProject'
 import { StatusBadge } from './statusBadge'
 
@@ -6,29 +10,49 @@ type Props = {
   snapshot: DemoProjectSnapshot
   selection: Selection
   onSelect: (selection: Selection) => void
+  selectedCableManufacturerIds?: readonly string[]
 }
 
-export function WeightSchedule({ snapshot, selection, onSelect }: Props) {
+export function WeightSchedule({
+  snapshot,
+  selection,
+  onSelect,
+  selectedCableManufacturerIds,
+}: Props) {
   const { weight, structural, inputs } = snapshot
+  const scope = selectedCableManufacturerIds
+    ? new Set(selectedCableManufacturerIds)
+    : null
+
+  const contributions = weight.contributions.filter((c) => {
+    if (!scope) return true
+    const meta = inputs.cables.find((x) => x.id === c.cableInstanceId)
+    if (!meta) return true
+    return scope.has(meta.manufacturerId)
+  })
 
   return (
     <section className="view view--list" aria-label="Weight schedule">
       <header className="view__head">
         <h2>Weight schedule</h2>
-        <p>Missing mass ≠ 0 · structural deferred</p>
+        <p>Missing mass ≠ 0 · structural deferred · filtered by manufacturer</p>
       </header>
       <table className="weight-table">
         <thead>
           <tr>
             <th scope="col">Item</th>
+            <th scope="col">Maker</th>
             <th scope="col">kg/m</th>
             <th scope="col">Length (m)</th>
             <th scope="col">kg</th>
           </tr>
         </thead>
         <tbody>
-          {weight.contributions.map((c) => {
+          {contributions.map((c) => {
             const meta = inputs.cables.find((x) => x.id === c.cableInstanceId)
+            const maker = meta
+              ? getManufacturer(meta.manufacturerId)
+              : undefined
             return (
               <tr
                 key={c.cableInstanceId}
@@ -42,6 +66,7 @@ export function WeightSchedule({ snapshot, selection, onSelect }: Props) {
                 }
               >
                 <td>{meta?.reference ?? c.cableInstanceId}</td>
+                <td>{maker?.displayName ?? meta?.manufacturerId ?? '—'}</td>
                 <td>{c.massKnown ? c.massKgPerM : '—'}</td>
                 <td>{c.lengthM.toFixed(3)}</td>
                 <td>{c.contributionKg != null ? c.contributionKg.toFixed(3) : 'unknown'}</td>
@@ -61,6 +86,7 @@ export function WeightSchedule({ snapshot, selection, onSelect }: Props) {
             <td>Containment + accessories</td>
             <td>—</td>
             <td>—</td>
+            <td>—</td>
             <td>
               {weight.containmentAndAccessoriesKg != null
                 ? weight.containmentAndAccessoriesKg.toFixed(3)
@@ -71,12 +97,12 @@ export function WeightSchedule({ snapshot, selection, onSelect }: Props) {
         <tfoot>
           <tr>
             <th scope="row">Known cable subtotal</th>
-            <td colSpan={2} />
+            <td colSpan={3} />
             <td>{weight.knownCableSubtotalKg.toFixed(3)}</td>
           </tr>
           <tr>
             <th scope="row">Combined installed</th>
-            <td colSpan={2} />
+            <td colSpan={3} />
             <td>
               {weight.combinedInstalledKg != null
                 ? `${weight.combinedInstalledKg.toFixed(3)} kg`

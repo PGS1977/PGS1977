@@ -73,9 +73,15 @@ describe('AC11 — save / reopen / export identical IDs, inputs, placements, num
   it('keeps fixture provenance and incomplete catalogue state', () => {
     const doc = createNewFixtureProject()
     expect(doc.designBasis.catalogueState).toBe('incomplete')
+    const fixtures = doc.designBasis.productSources.filter(
+      (s) => s.manufacturerId === 'synthetic',
+    )
+    expect(fixtures.length).toBeGreaterThan(0)
+    expect(fixtures.every((s) => s.provenance === 'fixture')).toBe(true)
     expect(
-      doc.designBasis.productSources.every((s) => s.provenance === 'fixture'),
+      doc.designBasis.productSources.every((s) => s.provenance !== 'verified'),
     ).toBe(true)
+    expect(doc.designBasis.selectedCableManufacturerIds).toContain('synthetic')
     expect(doc.calculationInputs.usableWidthMm).not.toBe(150)
     expect(doc.calculationInputs.usableWidthMm).not.toBe(300)
   })

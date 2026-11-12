@@ -17,6 +17,7 @@ import { IssueList } from './IssueList'
 import { PlanView } from './PlanView'
 import { StatusBadge } from './statusBadge'
 import { View3D } from './View3D'
+import { CableProductPicker } from './CableProductPicker'
 import { WeightSchedule } from './WeightSchedule'
 
 type Props = {
@@ -82,7 +83,12 @@ export function ValidationWorkspace({
         <strong>Production catalogue incomplete.</strong>{' '}
         {provenanceLabel(PROVENANCE.fixture)}. Project{' '}
         <code>{document.project.projectNumber}</code> · {document.project.name}.
-        Linked views use synthetic fixture geometry only — never hard-coded
+        Cable makers in scope:{' '}
+        {document.designBasis.selectedCableManufacturerIds.join(', ') || 'none'}
+        ; containment:{' '}
+        {document.designBasis.selectedContainmentManufacturerIds.join(', ') ||
+          'none'}
+        . Linked views use synthetic fixture geometry only — never hard-coded
         150/300 mm pass/fail.
       </section>
 
@@ -147,6 +153,14 @@ export function ValidationWorkspace({
           snapshot={snapshot}
           selection={selection}
           onSelect={setSelection}
+          selectedCableManufacturerIds={
+            document.designBasis.selectedCableManufacturerIds
+          }
+        />
+        <CableProductPicker
+          designBasis={document.designBasis}
+          inputs={inputs}
+          onInputsChange={onInputsChange}
         />
       </div>
 
