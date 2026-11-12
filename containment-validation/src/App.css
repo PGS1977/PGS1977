@@ -1,0 +1,83 @@
+:root {
+  --ink: #1a1f24;
+  --muted: #4a5560;
+  --paper: #f3f0ea;
+  --band: #dfe6df;
+  --accent: #2f5d50;
+  --warn-bg: #fff4d6;
+  --warn-ink: #5c4a12;
+  --mono: "IBM Plex Mono", "Consolas", monospace;
+  --sans: "Source Sans 3", "Segoe UI", sans-serif;
+  --display: "Fraunces", "Georgia", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 0%, #e7eee8 0%, transparent 42%),
+    linear-gradient(165deg, #f7f4ef 0%, var(--paper) 55%, #e8ece7 100%);
+  font-family: var(--sans);
+  min-height: 100vh;
+}
+
+.shell {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.shell__header {
+  margin-bottom: 1.5rem;
+}
+
+.shell__brand {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.shell__tagline {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.shell__banner {
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+  border-left: 4px solid #c4952a;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.75rem;
+  line-height: 1.45;
+}
+
+.shell__panel h1 {
+  font-family: var(--display);
+  font-size: 1.55rem;
+  margin: 0 0 0.6rem;
+}
+
+.shell__panel p,
+.shell__panel li {
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.shell__panel ul {
+  padding-left: 1.2rem;
+}
+
+.shell__panel code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--band);
+  padding: 0.05rem 0.3rem;
+}
