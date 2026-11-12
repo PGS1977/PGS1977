@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { isSelected, type Selection } from '../../domain'
 import { isoProject } from '../../render'
-import type { DemoProjectSnapshot } from '../demo/syntheticProject'
+import type { DemoProjectSnapshot } from '../../project/syntheticProject'
 
 type Props = {
   snapshot: DemoProjectSnapshot

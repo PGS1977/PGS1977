@@ -16,7 +16,7 @@ M1 applicability: `core` (must exercise in M1), `partial` (model/hooks only or b
 | AC08 | Second cable instance added | Area, arrangement and mass account for both | core | pass | Area + weight + arrangement placement covered |
 | AC09 | Manufacturer radius, weight or usable envelope missing | Relevant result `INCOMPLETE`; missing weight ≠ 0 | core | pass | Envelope + mass + bend-radius incomplete paths |
 | AC10 | Product/route/scale changes after validation | Affected results `STALE` until recalculated | core | pass | `tests/stale.ac10.test.ts` + workspace spare/rule change demo |
-| AC11 | Save/reopen and export | Identical IDs, inputs, placements, numeric results | core | not started | Local JSON PoC |
+| AC11 | Save/reopen and export | Identical IDs, inputs, placements, numeric results | core | pass | `tests/persistence.ac11.test.ts` — JSON + memory library round-trip |
 | AC12 | Recognised scale unconfirmed; PDF crossing ambiguous | Dimensional validation incomplete; no inferred junction | out / partial | deferred | M2 PDF workflow; DrawingStub has `scaleConfirmed` |
 | AC13 | Verified four-cable 150/300 mm bend assemblies | Match independent results; width alone never fixes outcome | partial | blocked | Needs verified Legrand/Prysmian geometry (DG08) |
 | AC14 | Search limit reached | Fit error: no valid arrangement within search; no proven-impossibility claim | core | pass | `tests/placement.ac.test.ts` — ERROR_NO_VALID_ARRANGEMENT_FOUND |

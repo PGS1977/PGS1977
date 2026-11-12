@@ -1,9 +1,12 @@
 /**
  * Project and revision persistence (brief §8).
- * PoC will use local browser storage + JSON export; interface reserved for later backend.
+ * Local browser storage + JSON export/import for Milestone 1 PoC.
  */
 
-export type StorageBackend = 'local_json' | 'remote_authenticated'
+export * from './projectDocument'
+export * from './projectLibrary'
+
+export type StorageBackend = 'local_json' | 'remote_authenticated' | 'memory'
 
 export interface ProjectStore {
   readonly backend: StorageBackend
@@ -11,8 +14,9 @@ export interface ProjectStore {
   load(): Promise<string | null>
 }
 
+/** Single-slot store retained for simple adapters; prefer ProjectLibrary. */
 export class InMemoryProjectStore implements ProjectStore {
-  readonly backend = 'local_json' as const
+  readonly backend = 'memory' as const
   private data: string | null = null
 
   async save(projectJson: string): Promise<void> {

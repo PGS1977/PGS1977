@@ -7,7 +7,7 @@ import {
   PROVENANCE,
   RESULT_STATUS,
   type ValidationResult,
-} from '../../domain'
+} from '../domain'
 import {
   arrangeCables,
   buildStraightThenBendPaths,
@@ -22,8 +22,8 @@ import {
   type BendCheckResult,
   type SpareAreaResult,
   type WeightResult,
-} from '../../engine'
-import { trayRenderMeshFromEnvelope } from '../../render'
+} from '../engine'
+import { trayRenderMeshFromEnvelope } from '../render'
 
 export const DEMO_CALCULATION_VERSION = 'demo-workspace-1.0.0' as const
 
