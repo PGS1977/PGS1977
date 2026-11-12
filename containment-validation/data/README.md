@@ -9,9 +9,10 @@
 ## Rules
 
 - Incomplete production-data state until verified records exist; fixture-based engine work continues.
-- Do **not** invent Legrand / Prysmian dimensions, radius factors, support ratings or product references.
+- Do **not** invent Legrand / Prysmian / BICC dimensions, radius factors, support ratings or product references.
 - Nominal tray width/depth is not usable envelope. Store verified usable boundaries per product.
 - 150 mm / 300 mm tray examples are enabled only when matching verified geometry is supplied; width alone never fixes pass/fail.
 - Missing mass is unknown, not zero.
+- Raw PDFs under `raw/` are **not** verified product records. For the BICC catalogue, **LV only** may be extracted later — see `raw/DO-NOT-USE-OVERHEAD-LINE.md`.
 
-See `docs/data-gap-register.md` (project store / copied docs) for DG01–DG10 status.
+See `docs/data-gap-register.md` for DG01–DG10 status.
